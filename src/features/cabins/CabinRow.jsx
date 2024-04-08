@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
 import { deleteCabin } from "../../services/apiCabins";
+import toast from "react-hot-toast";
 
 const TableRow = styled.div`
   display: grid;
@@ -53,8 +54,16 @@ function CabinRow({ cabin }) {
     discount,
   } = cabin;
 
+  const queryClient = useQueryClient();
   const { isLoading: isDeleting, mutate } = useMutation({
-    mutationFn: (id) => deleteCabin(id),//you can also use delete cabin and the funcion will execute as expected
+    mutationFn: (id) => deleteCabin(id), //you can also use deleteCabin without the id and the funcion will execute as expected
+    onSuccess: () => {
+      toast.success("Cabin successfuly deleted");
+      queryClient.invalidateQueries({
+        queryKey: ["cabins"],
+      });
+    },
+    onError: (err) => toast.error(err.message),
   });
 
   return (

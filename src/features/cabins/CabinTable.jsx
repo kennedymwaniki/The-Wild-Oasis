@@ -35,7 +35,7 @@ function CabinTable() {
     data: cabins,
     error,
   } = useQuery({
-    queryKey: ["cabin"],
+    queryKey: ["cabins"],
     // the queryFn needs to return a promise
     queryFn: getCabins,
   });
