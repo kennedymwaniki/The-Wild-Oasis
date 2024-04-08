@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect } from "react";
 import Heading from "../ui/Heading";
 import Row from "../ui/Row";
@@ -9,7 +10,7 @@ function Cabins() {
     <>
       <Row type="horizontal">
         <Heading as="h1">All cabins</Heading>
-        <p>TEST</p>
+        <p>Filter / Sort </p>
       </Row>
       <Row>
         <CabinTable />

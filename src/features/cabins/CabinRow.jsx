@@ -1,4 +1,8 @@
+/* eslint-disable no-unused-vars */
+import { useMutation } from "@tanstack/react-query";
 import styled from "styled-components";
+import { formatCurrency } from "../../utils/helpers";
+import { deleteCabin } from "../../services/apiCabins";
 
 const TableRow = styled.div`
   display: grid;
@@ -38,3 +42,33 @@ const Discount = styled.div`
   font-weight: 500;
   color: var(--color-green-700);
 `;
+
+function CabinRow({ cabin }) {
+  const {
+    id: cabinId,
+    name,
+    image,
+    maxCapacity,
+    regularPrice,
+    discount,
+  } = cabin;
+
+  const { isLoading: isDeleting, mutate } = useMutation({
+    mutationFn: (id) => deleteCabin(id),//you can also use delete cabin and the funcion will execute as expected
+  });
+
+  return (
+    <TableRow role="row">
+      <Img src={image} alt="cabin" />
+      <Cabin>{name}</Cabin>
+      <div> can accomodate {maxCapacity}</div>
+      <Price>{formatCurrency(regularPrice)}</Price>
+      <Discount>{discount}</Discount>
+      <button onClick={() => mutate(cabinId)} disabled={isDeleting}>
+        Delete
+      </button>
+    </TableRow>
+  );
+}
+
+export default CabinRow;

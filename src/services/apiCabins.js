@@ -10,3 +10,15 @@ export async function getCabins() {
 
   return data;
 }
+
+export async function deleteCabin(id) {
+  // we delete the id column of the cabin where the id we passed in is equal to it
+  const { data, error } = await supabase.from("cabins").delete().eq("id", id);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Cabins could not be deleted");
+  }
+
+  return data;
+}
