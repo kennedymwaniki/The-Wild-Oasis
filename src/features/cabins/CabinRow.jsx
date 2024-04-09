@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 
 const TableRow = styled.div`
   display: grid;
-  grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
+  grid-template-columns: 0.6fr 1.9fr 2.2fr 1fr 1fr 1fr;
   column-gap: 2.4rem;
   align-items: center;
   padding: 1.4rem 2.4rem;
@@ -70,7 +70,7 @@ function CabinRow({ cabin }) {
     <TableRow role="row">
       <Img src={image} alt="cabin" />
       <Cabin>{name}</Cabin>
-      <div> can accomodate {maxCapacity}</div>
+      <div>can fit {maxCapacity} guest</div>
       <Price>{formatCurrency(regularPrice)}</Price>
       <Discount>{discount}</Discount>
       <button onClick={() => mutate(cabinId)} disabled={isDeleting}>

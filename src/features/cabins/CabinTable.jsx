@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getCabins } from "../../services/apiCabins";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
+import toast from "react-hot-toast";
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -16,7 +17,7 @@ const Table = styled.div`
 
 const TableHeader = styled.header`
   display: grid;
-  grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
+  grid-template-columns: 0.6fr 1.9fr 2.2fr 1fr 1fr 1fr;
   column-gap: 2.4rem;
   align-items: center;
 
@@ -41,6 +42,7 @@ function CabinTable() {
   });
 
   if (isLoading) return <Spinner />;
+  // if (isLoading && error) return toast.error("Could not fetch Cabins");
 
   return (
     <Table role="table">
