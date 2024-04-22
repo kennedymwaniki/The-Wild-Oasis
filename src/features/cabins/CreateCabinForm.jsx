@@ -52,7 +52,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 
   const isEditSession = Boolean(editId);
 
-  const { register, handleSubmit, reset, getValues, formState } = useForm({
+  const { register, handleSubmit, getValues, formState } = useForm({
     defaultValues: isEditSession ? editValues : {},
   });
 
