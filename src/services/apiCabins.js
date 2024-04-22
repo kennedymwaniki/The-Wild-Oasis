@@ -22,7 +22,7 @@ export async function CreateEditCabin(newCabin, id) {
     "/",
     ""
   );
-
+  // if the image does not have a path then we create a new one, else we use the existing image path
   const imagePath = hasImagePath
     ? newCabin.image
     : `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
