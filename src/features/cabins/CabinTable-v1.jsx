@@ -1,10 +1,8 @@
-/* eslint-disable no-unused-vars */
-import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
+import styled from "styled-components";
 import { getCabins } from "../../services/apiCabins";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
-import { useCabin } from "./useCabin";
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -17,7 +15,7 @@ const Table = styled.div`
 
 const TableHeader = styled.header`
   display: grid;
-  grid-template-columns: 0.6fr 1.9fr 2.2fr 1fr 1fr 1fr;
+  grid-template-columns: 0.6fr 1.8fr 2.2fr 1fr 1fr 1fr;
   column-gap: 2.4rem;
   align-items: center;
 
@@ -31,9 +29,16 @@ const TableHeader = styled.header`
 `;
 
 function CabinTable() {
-  const { isLoading, cabins } = useCabin();
+  const {
+    isLoading,
+    data: cabins,
+    error,
+  } = useQuery({
+    queryKey: ["cabins"],
+    queryFn: getCabins,
+  });
+
   if (isLoading) return <Spinner />;
-  // if (isLoading && error) return toast.error("Could not fetch Cabins");
 
   return (
     <Table role="table">

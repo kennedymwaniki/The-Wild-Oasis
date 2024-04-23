@@ -49,10 +49,12 @@ const Error = styled.span`
 // Error
 function CreateCabinForm({ cabinToEdit = {} }) {
   const { id: editId, ...editValues } = cabinToEdit;
+  const { createCabin, isCreating } = useCreateCabin();
+  const { editCabin, isEditing } = useEditCabin();
 
   const isEditSession = Boolean(editId);
 
-  const { register, handleSubmit, getValues, formState } = useForm({
+  const { register, handleSubmit, getValues, reset, formState } = useForm({
     defaultValues: isEditSession ? editValues : {},
   });
 
@@ -60,8 +62,6 @@ function CreateCabinForm({ cabinToEdit = {} }) {
   // const queryClient = useQueryClient();
 
   //hook for creating a cabin
-  const { createCabin, isCreating } = useCreateCabin();
-  const { editCabin, isEditing } = useEditCabin();
 
   const isWorking = isCreating || isEditing;
 
@@ -73,7 +73,13 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 
     if (isEditSession)
       editCabin({ newCabinData: { ...data, image }, id: editId });
-    else createCabin({ ...data, image: image });
+    else
+      createCabin(
+        { ...data, image: image },
+        {
+          onSuccess: (data) => reset(),
+        }
+      );
   }
 
   function onError(errors) {
@@ -167,34 +173,6 @@ function CreateCabinForm({ cabinToEdit = {} }) {
           {isEditSession ? "Edit Cabin" : "Create new Cabin"}
         </Button>
       </FormRow2>
-
-      {/* 
-      <FormRow2>
-        <Label htmlFor="maxCapacity">Maximum capacity</Label>
-        <Input
-          type="number"
-          id="maxCapacity"
-          {...register("maxCapacity", {
-            required: "This field is required",
-            min: { value: 1, messsage: "Capacity shuld be at least one" },
-          })}
-        />
-        {errors?.maxCapacity?.message && (
-          <Error>{errors.maxCapacity.message}</Error>
-        )}
-      </FormRow2> */}
-      {/* 
-      <FormRow2>
-        <Label htmlFor="regularPrice">Regular price</Label>
-        <Input
-          type="number"
-          id="regularPrice"
-          {...register("regularPrice", {
-            required: "This field is required",
-            min: { value: 1, messsage: "Capacity shuld be at least one" },
-          })}
-        />
-      </FormRow2> */}
     </Form>
   );
 }

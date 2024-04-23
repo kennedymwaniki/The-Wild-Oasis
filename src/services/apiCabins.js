@@ -38,13 +38,15 @@ export async function CreateEditCabin(newCabin, id) {
 
   // the query above is then executed to fetch the edited/ created cabin as as single row
   const { data, error } = await query.select().single(); // we use this to return a new row immediately
+
   if (error) {
     console.error(error);
     throw new Error("Cabin could not be created");
   }
+ 
+  // step 2. Upload image if the cabin creation is succcessful
+  if (hasImagePath) return data; //or if we already have an image nothing new/image should be uploaded
 
-  // step 2. Upload if the cabin creation is succcessful
-  if (hasImagePath) return data;
   const { error: storageError } = await supabase.storage
     .from("cabin-images")
     .upload(imageName, newCabin.image);

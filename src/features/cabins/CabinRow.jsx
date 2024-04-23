@@ -5,6 +5,9 @@ import { formatCurrency } from "../../utils/helpers";
 import { useState } from "react";
 import CreateCabinForm from "./CreateCabinForm";
 import { useDeleteCabin } from "./useDeleteCabin";
+import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
+import { useCreateCabin } from "./useCreateCabin";
+import { useEditCabin } from "./useEditCabin";
 
 const TableRow = styled.div`
   display: grid;
@@ -48,26 +51,27 @@ const Discount = styled.div`
 function CabinRow({ cabin }) {
   const [showForm, setShowForm] = useState(false);
   const { isDeleting, deleteCabin } = useDeleteCabin();
+  const { isCreating, createCabin } = useCreateCabin();
   const {
     id: cabinId,
     name,
     image,
     maxCapacity,
     regularPrice,
+    description,
     discount,
   } = cabin;
 
-  // const queryClient = useQueryClient();
-  // const { isLoading: isDeleting, mutate } = useMutation({
-  //   mutationFn: (id) => deleteCabin(id), //you can also use deleteCabin without the id and the funcion will execute as expected
-  //   onSuccess: () => {
-  //     toast.success("Cabin successfuly deleted");
-  //     queryClient.invalidateQueries({
-  //       queryKey: ["cabins"],
-  //     });
-  //   },
-  //   onError: (err) => toast.error(err.message),
-  // });
+  function handleDuplicate() {
+    createCabin({
+      name: `Copy of ${name}`,
+      image,
+      maxCapacity,
+      regularPrice,
+      discount,
+      description,
+    });
+  }
 
   return (
     <>
@@ -79,9 +83,17 @@ function CabinRow({ cabin }) {
         {discount ? <Discount>{discount}</Discount> : <span>&mdash;</span>}
 
         <div>
-          <button onClick={() => setShowForm((show) => !show)}>Edit</button>
+          <button onClick={handleDuplicate}>
+            {/* //duplicating */}
+            <HiSquare2Stack />
+          </button>
+          <button onClick={() => setShowForm((show) => !show)}>
+            {/* editing */}
+            <HiPencil />
+          </button>
           <button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}>
-            Delete
+            {/* deleting */}
+            <HiTrash />
           </button>
         </div>
       </TableRow>
