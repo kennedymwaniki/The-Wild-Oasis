@@ -7,7 +7,7 @@ export async function getSettings() {
     console.error(error);
     throw new Error("Settings could not be loaded");
   }
-  return data;
+  return data; // we can also do return data[0] this is in case the data we receive is an array and we want the first object
 }
 
 // We expect a newSetting object that looks like {setting: newValue}
