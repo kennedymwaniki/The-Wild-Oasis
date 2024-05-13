@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { getCabins } from "../../services/apiCabins";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
+import toast from "react-hot-toast";
 
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -39,7 +40,7 @@ function CabinTable() {
   });
 
   if (isLoading) return <Spinner />;
-
+  if(error) toast.error("could not get cabins")
   return (
     <Table role="table">
       <TableHeader role="row">
