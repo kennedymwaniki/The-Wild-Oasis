@@ -15,6 +15,8 @@ import { useForm } from "react-hook-form";
 import { createCabin } from "../../services/apiCabins";
 
 function CreateCabinForm() {
+  // register is what we use to store the values of our inputs and then the data can be accessed from the onSUbmit function which is called by the 
+  // handle submit function (handlesubmit, register) are both provided by the useForm()
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { errors } = formState;
 
