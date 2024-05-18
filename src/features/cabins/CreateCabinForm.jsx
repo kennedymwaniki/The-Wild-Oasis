@@ -185,7 +185,7 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
         <Button
           variation="secondary"
           type="reset"
-          onClick={() => onCloseModal?.()}
+          onClick={() => onCloseModal?.()}// if the oncloseModal is undefined then the modal willnot be closed as it does not have a close method
         >
           Cancel
         </Button>
