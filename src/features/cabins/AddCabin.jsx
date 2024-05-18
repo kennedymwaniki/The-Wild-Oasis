@@ -27,7 +27,7 @@ export default AddCabin;
 //         Add new cabin
 //       </Button>
 //       {isOpenModal && (
-//         <Modal onClose={() => setIsOpenModal(false)}>
+//         <Modal onClose={() => setIsOpenModal(false)}>  //NB THE ONCLOSE PROP IS A FUNCTION THAT WILL SET IS OPEN MODAL TO FALSE AND CLOSE THE MODAL WHEN THE FUNCTION IS CALLED BY THE BUTTON ON THE MODAL
 //           <CreateCabinForm onCloseModal={() => setIsOpenModal(false)} />
 //         </Modal>
 //       )}

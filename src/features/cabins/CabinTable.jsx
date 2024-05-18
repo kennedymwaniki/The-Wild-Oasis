@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
 import { useCabin } from "./useCabin";
+import toast from "react-hot-toast";
 
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
@@ -32,8 +33,9 @@ const TableHeader = styled.header`
 `;
 
 function CabinTable() {
-  const { isLoading, cabins } = useCabin();
+  const { isLoading, cabins, error } = useCabin();
   if (isLoading) return <Spinner />;
+  if (error) return toast.error("could not fetch cabins");
   // if (isLoading && error) return toast.error("Could not fetch Cabins");
 
   return (
