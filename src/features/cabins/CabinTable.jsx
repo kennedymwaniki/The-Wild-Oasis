@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
+import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
-
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
 import { useCabin } from "./useCabin";
@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
-import { useSearchParams } from "react-router-dom";
+
 import { GiConsoleController } from "react-icons/gi";
 // const Table = styled.div`
 //   border: 1px solid var(--color-grey-200);
@@ -35,13 +35,14 @@ const TableHeader = styled.header`
 `;
 
 function CabinTable() {
-  const { isLoading, cabins, error } = useCabin();
   const [searchParams] = useSearchParams();
+  const { isLoading, cabins, error } = useCabin();
   if (isLoading) return <Spinner />;
   if (error) return toast.error("could not fetch cabins");
 
   // if (isLoading && error) return toast.error("Could not fetch Cabins");
 
+  //FILTERING
   const filterValue = searchParams.get("discount") || "all";
   console.log(filterValue);
 
@@ -52,6 +53,14 @@ function CabinTable() {
   if (filterValue === "with-discount")
     filteredCabins = cabins.filter((cabin) => cabin.discount > 0);
 
+  // 2.SORTING
+  const sortBy = searchParams.get("sortBy") || "startDate-asc";
+  const [field, direction] = sortBy.split("-");
+  const modifier = direction === "asc" ? 1 : -1;
+  const sortedCabins = filteredCabins.sort(
+    (a, b) => (a[field] - b[field]) * modifier
+  );
+  console.log(modifier, sortedCabins);
   return (
     <Menus>
       <Table columns="0.6fr 1.9fr 2.2fr 1fr 1fr 1fr">
@@ -66,7 +75,8 @@ function CabinTable() {
 
         <Table.Body
           // data={cabins}
-          data={filteredCabins}
+          // data={filteredCabins}
+          data={sortedCabins}
           render={(cabin) => <CabinRow cabin={cabin} key={cabin.id} />}
         />
       </Table>
