@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
+import Empty from "../../ui/Empty";
 
 import { GiConsoleController } from "react-icons/gi";
 // const Table = styled.div`
@@ -40,6 +41,7 @@ function CabinTable() {
   if (isLoading) return <Spinner />;
   if (error) return toast.error("could not fetch cabins");
 
+  if (!cabins.length) return <Empty resourceName="cabins" />;
   // if (isLoading && error) return toast.error("Could not fetch Cabins");
 
   //FILTERING
