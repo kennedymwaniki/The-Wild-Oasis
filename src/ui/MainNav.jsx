@@ -34,7 +34,7 @@ const StyledNavLink = styled(NavLink)`
   &.active:link,
   &.active:visited {
     color: var(--color-grey-800);
-    background-color: var(--color-grey-300);
+    background-color: var(--color-grey-50);
     border-radius: var(--border-radius-sm);
   }
 
@@ -60,7 +60,7 @@ function MainNav() {
         <li>
           <StyledNavLink to="/dashboard">
             <HiOutlineHome />
-            <span> Home </span>
+            <span>Home</span>
           </StyledNavLink>
         </li>
         <li>
